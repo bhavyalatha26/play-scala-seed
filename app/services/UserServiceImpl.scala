@@ -41,7 +41,7 @@ class UserServiceImpl @Inject()
       case Some(user) => Success(user)
       case None =>
         val statusCode = 40401
-        Failure(CustomError(NOT_FOUND,statusCode,"User not found !",Option(s"Data not found with given id - $id")))
+        Failure(CustomError(NOT_FOUND,statusCode,"User not found !",Option(s"User data not found with given id - $id")))
     }
   }
 
@@ -57,6 +57,11 @@ class UserServiceImpl @Inject()
 
   override def delete(id: String): Future[Try[String]] = {
     logger.debug("[delete] Delete the given user")
-    userDAO.delete(id)
+    this.get(id) flatMap {
+      case Success(_) =>
+        userDAO.delete(id)
+      case Failure(e) =>
+        Future(Failure(e))
+    }
   }
 }

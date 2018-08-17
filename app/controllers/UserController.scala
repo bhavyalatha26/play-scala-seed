@@ -140,8 +140,8 @@ class UserController @Inject()
   */
   def delete(id:String) : Action[AnyContent] = Action.async { implicit request =>
     userService.delete(id) map {
-      case Success(user) =>
-        Ok(Json.toJson(user))
+      case Success(successMsg) =>
+        Ok(Json.toJson(Json.obj("message" -> s"$successMsg : User successfully deleted")))
       case Failure(e) =>
         e match {
           case custom : CustomError =>
