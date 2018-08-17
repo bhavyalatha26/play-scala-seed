@@ -1,0 +1,40 @@
+pipeline:
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - .ivy2
+    volumes:
+      - /home/yantranet/cache:/cache
+    when:
+        event: tag
+        branch:
+           include: "${DRONE_TAG}"
+
+  build:
+    image: bigtruedata/sbt:latest
+    commands:
+      - ./sbt -Dsbt.ivy.home=.ivy2 clean universal:packageZipTarball
+    when:
+        event: tag
+        branch:
+           include: "${DRONE_TAG}"
+
+  rebuild-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - .ivy2
+    volumes:
+      - /home/yantranet/cache:/cache
+    when:
+        event: tag
+        branch:
+           include: "${DRONE_TAG}"
+
+  docker:
+    image: plugins/docker
+    repo: bhavyalatha26/play-scala-demo:1.0.0
+    secrets: [ docker_username, docker_password ]
+
+branches: [master]

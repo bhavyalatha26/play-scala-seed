@@ -1,0 +1,12 @@
+version: '2'
+services:
+  mongo:
+    image: 'mongo:3.6-jessie'
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pa88w0rd
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo/data:/data/db

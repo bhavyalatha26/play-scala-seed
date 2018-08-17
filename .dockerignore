@@ -1,0 +1,10 @@
+logs
+/.idea
+/.idea_modules
+/.classpath
+/.settings
+/RUNNING_PID
+/public
+project/project
+project/target
+mongo
