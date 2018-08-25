@@ -1,7 +1,5 @@
 # Play Scala Demo
 
-![Build Status](https://drone.yantrainteractive.com/api/badges/yantranet/signwaremicroserviceseed/status.svg)
-
 This project serves as a `seed project` to build a REST API backend service using Play 2.6 / Scala.
 
 ## About the project
